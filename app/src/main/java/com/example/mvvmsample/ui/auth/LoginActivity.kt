@@ -1,37 +1,32 @@
 package com.example.mvvmsample.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mvvmsample.R
-import com.example.mvvmsample.data.db.AppDatabase
 import com.example.mvvmsample.data.db.entities.User
-import com.example.mvvmsample.data.network.MyApi
-import com.example.mvvmsample.data.network.NetworkConnectionInterceptor
-import com.example.mvvmsample.data.repositories.UserRepository
 import com.example.mvvmsample.databinding.ActivityLoginBinding
 import com.example.mvvmsample.ui.home.HomeActivity
 import com.example.mvvmsample.util.hide
 import com.example.mvvmsample.util.show
 import com.example.mvvmsample.util.snackbar
-import com.example.mvvmsample.util.toast
 import kotlinx.android.synthetic.main.activity_login.*
- 
-class LoginActivity : AppCompatActivity() ,AuthListener{
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
+
+class LoginActivity : AppCompatActivity() ,AuthListener,KodeinAware{
+
+    override val kodein by kodein()
+    private val factory: AuthViewModelFactory by instance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Instances required all of this will be changed later to dependency injection !!This should not be used ever
-        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
-        val api = MyApi(networkConnectionInterceptor)
-        val db = AppDatabase(this)
-        val repository=UserRepository(api,db)
-        val factory= AuthViewModelFactory(repository)
+
         //ActivityLoginBinding was automatically generated to bind this class to the activity_login
         val binding:ActivityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
         //This is the new way to call a View Model Provider as of now august 2020
