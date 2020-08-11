@@ -1,6 +1,7 @@
 package com.example.mvvmsample.data.network
 
 import com.example.mvvmsample.data.network.responses.AuthResponse
+import okhttp3.OkHttpClient
 
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -20,9 +21,15 @@ interface MyApi {
     ): Response<AuthResponse>
 
     companion object{
-        operator fun invoke(): MyApi{
-            return Retrofit.Builder().baseUrl("https://api.simplifiedcoding.in/course-apis/mvvm/")
+        operator fun invoke( networkConnectionInterceptor: NetworkConnectionInterceptor): MyApi{
+            //To not create an instance of networkinterceptor we are adding it to the invoke function so we can create it elsewhere and add the context as well
+            val okkHttpClient = OkHttpClient.Builder().addInterceptor(networkConnectionInterceptor).build()
+
+            return Retrofit.Builder().client(okkHttpClient).baseUrl("https://api.simplifiedcoding.in/course-apis/mvvm/")
                 .addConverterFactory(GsonConverterFactory.create()).build().create(MyApi::class.java)
         }
     }
+
+    //Check whether we have internet or not
+
 }
