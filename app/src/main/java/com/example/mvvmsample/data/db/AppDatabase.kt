@@ -22,8 +22,10 @@ abstract class AppDatabase :RoomDatabase() {
         //This function is the one that will create the database , it will check if LOCK is not null if it's not null it will not be created again
         //This invoke essentially means that when we call for example AppDatabse() it will automatically do ONE THING and that's it creating an instance
         //of the database into our application
-        operator fun invoke(context:Context) = instance?: synchronized(LOCK){
-            instance?:buildDatabase(context).also { instance=it }
+        operator fun invoke(context:Context) = instance ?: synchronized(LOCK){
+            instance ?: buildDatabase(context).also {
+                instance=it
+            }
         }
         //This one here will create our database using the application context , this same class and the name of our database it can be whatever and then it
         //builds the database
