@@ -21,7 +21,7 @@ import com.example.mvvmsample.util.show
 import com.example.mvvmsample.util.snackbar
 import com.example.mvvmsample.util.toast
 import kotlinx.android.synthetic.main.activity_login.*
-
+ 
 class LoginActivity : AppCompatActivity() ,AuthListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
