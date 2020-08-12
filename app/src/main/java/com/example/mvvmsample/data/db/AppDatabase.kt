@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.mvvmsample.data.db.entities.Quote
 import com.example.mvvmsample.data.db.entities.User
 
 //Here we can define as many entities as we want
-@Database(entities = [User::class],version = 1)
+@Database(entities = [User::class, Quote::class],version = 1)
 abstract class AppDatabase :RoomDatabase() {
     abstract fun getUserDao():UserDao
+    abstract fun getQuoteDao():QuoteDao
     //https://kotlinlang.org/docs/tutorials/kotlin-for-py/objects-and-companion-objects.html check this if i forgot
     companion object{
 
