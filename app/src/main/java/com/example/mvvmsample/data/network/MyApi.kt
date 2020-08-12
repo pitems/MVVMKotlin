@@ -20,6 +20,14 @@ interface MyApi {
         @Field("password")password:String
     ): Response<AuthResponse>
 
+    @FormUrlEncoded
+    @POST("signup")
+    suspend fun userSignup(
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password")password: String
+    ):Response<AuthResponse>
+
     companion object{
         operator fun invoke( networkConnectionInterceptor: NetworkConnectionInterceptor): MyApi{
             //To not create an instance of networkinterceptor we are adding it to the invoke function so we can create it elsewhere and add the context as well

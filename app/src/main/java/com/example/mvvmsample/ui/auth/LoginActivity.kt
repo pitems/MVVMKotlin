@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() ,AuthListener,KodeinAware{
 
 
         //ActivityLoginBinding was automatically generated to bind this class to the activity_login
-        val binding:ActivityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
+        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
         //This is the new way to call a View Model Provider as of now august 2020
         //We give added the factory to the ViewModel so it has the repository injected as a dependency
         val viewModel =ViewModelProvider(this,factory).get(AuthViewModel::class.java)
